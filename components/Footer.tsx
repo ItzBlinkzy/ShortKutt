@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 export default function Footer() {
-  return (
-    <div className='flex justify-center items-center'>Blinkzy - {new Date().getFullYear()}</div>
-  )
+    return (
+        <div className="flex justify-center items-center">Blinkzy - {new Date().getFullYear()}</div>
+    );
 }

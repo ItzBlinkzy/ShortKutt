@@ -1,5 +1,6 @@
 # ShortKutt
-* A URL Shortener.
+* A simple URL Shortener.
 
+Website: https://shortkutt.me
 
-_Built using Next.js, TypeScript and MongoDB. Hosted on Vercel._
+_Built to learn this stack: Next.js + TailwindCSS, TypeScript and MongoDB. Hosted on [Vercel](https://vercel.com)._
