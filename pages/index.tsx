@@ -71,7 +71,7 @@ export default function Home() {
                                         value={inputValue}
                                         onChange={handleChange}
                                         placeholder="Enter URL"
-                                        className="h-10 md:w-[40rem] lg:w-[60rem] ring-1 focus:outline focus:outline-2 focus:outline-darkblue rounded-lg p-4"
+                                        className="h-10 md:w-[40rem] lg:w-[60rem] ring-1 focus:ring-2 focus:r-darkblue rounded-lg p-4"
                                     ></input>
                                     <div className="flex justify-end self-end items-start m-2 gap-2">
                                         <div>
