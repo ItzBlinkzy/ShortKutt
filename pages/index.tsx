@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import Hero from '@/components/Hero';
 import Image from 'next/image';
 import {ILink, TErrors} from '@/types';
+
 export default function Home() {
     const [inputValue, setInputValue] = useState('');
     const [createdLinks, setCreatedLinks] = useState<ILink[]>([]);
@@ -37,14 +38,10 @@ export default function Home() {
             },
         });
 
-        
         const data = await response.json();
-        
+
         if (response.status !== 200) {
-            setErrors([
-                ...errors,
-                {message: data.message, key: Date.now()},
-            ]);
+            setErrors([...errors, {message: data.message, key: Date.now()}]);
             return;
         }
         const newLinks = [data, ...createdLinks];
@@ -119,9 +116,7 @@ export default function Home() {
                                                     {link.shortUrl}
                                                 </a>
                                                 <p>URL: {link.originalUrl}</p>
-                                                <p>
-                                                    {new Date(link.createdAt).toLocaleTimeString()}
-                                                </p>
+                                                <p>{new Date(link.createdAt).toLocaleString()}</p>
                                             </div>
                                         );
                                     })}
