@@ -29,7 +29,6 @@ export default function Home() {
         }
 
         // Validate URL with REGEX here client side
-
         const response = await fetch('/api/link/shorten', {
             method: 'POST',
             body: JSON.stringify({url: inputValue}),
@@ -38,16 +37,16 @@ export default function Home() {
             },
         });
 
+        
+        const data = await response.json();
+        
         if (response.status !== 200) {
             setErrors([
                 ...errors,
-                {message: 'There was an error trying to shorten your link.', key: Date.now()},
+                {message: data.message, key: Date.now()},
             ]);
             return;
         }
-
-        const data = await response.json();
-
         const newLinks = [data, ...createdLinks];
 
         // Show user new link and save to local storage
@@ -111,7 +110,7 @@ export default function Home() {
                                         return (
                                             <div
                                                 key={index}
-                                                className="bg-grayblue p-4 ring-1 ring-black m-4"
+                                                className="bg-grayblue p-4 ring-1 ring-black m-4 rounded-md"
                                             >
                                                 <a
                                                     href={link.shortUrl}
