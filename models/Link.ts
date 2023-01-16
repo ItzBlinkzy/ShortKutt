@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import type ILink from "@/types";
+import type { ILink } from "@/types";
 
 const LinkSchema = new mongoose.Schema<ILink>({
   slug: {type: String, required: true},

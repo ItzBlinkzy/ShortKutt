@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import Head from 'next/head';
 import Footer from './Footer';
+import Hero from './Hero';
 import Header from './Header';
 
 type Props = {
@@ -17,7 +18,7 @@ const Layout = ({children, title = 'ShortKutt - URL Shortener'}: Props) => (
             <link rel="icon" type="image/png" href="/static/logo.png"></link>
         </Head>
         <div className="flex justify-between flex-col h-screen w-screen">
-            {<Header />}
+            {<Hero />}
             {children}
             {<Footer />}
         </div>

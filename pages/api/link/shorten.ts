@@ -3,7 +3,7 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import generateId from '@/lib/generateId';
 import dbConnect from '@/lib/dbConnect';
 import Link from '@/models/Link';
-import type ILink from '@/types';
+import type {ILink} from '@/types';
 
 type TResponseData = {
     message: string;
@@ -45,7 +45,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const linkObj = new Link(data);
 
-    const saved = await linkObj.save();
-    console.log(saved);
-    res.status(200).json({...data, message: 'success'});
+    try {
+        const saved = await linkObj.save();
+        console.log(saved);
+        res.status(200).json({...data, message: 'success'});
+    } catch (e) {
+        res.status(500).json({message: 'There was an error trying to shorten this link.'});
+    }
 }

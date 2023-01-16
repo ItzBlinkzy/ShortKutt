@@ -2,7 +2,7 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 import dbConnect from '@/lib/dbConnect';
 import Link from '@/models/Link';
-import ILink from '@/types';
+import type {ILink} from '@/types';
 
 type Data = {
     message: string;
