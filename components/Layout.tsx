@@ -17,7 +17,7 @@ const Layout = ({children, title = 'ShortKutt - URL Shortener'}: Props) => (
             <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             <link rel="icon" type="image/png" href="/static/logo.png"></link>
         </Head>
-        <div className="flex justify-between flex-col h-screen w-screen">
+        <div className="">
             {<Hero />}
             {children}
             {<Footer />}

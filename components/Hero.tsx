@@ -3,7 +3,7 @@ import Header from './Header';
 import Image from 'next/image';
 function Hero() {
     return (
-        <section className="bg-standardblue h-[40rem] bg-heroPattern bg-cover relative">
+        <section className="bg-standardblue h-[35rem] bg-heroPattern bg-cover relative">
             <div>
                 <Header />
                 <div className="flex flex-col p-10">

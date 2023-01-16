@@ -2,12 +2,14 @@ import Layout from '@/components/Layout';
 import React, {useState, useEffect} from 'react';
 import Hero from '@/components/Hero';
 import Image from 'next/image';
+import CreatedLinks from '@/components/CreatedLinks';
 import {ILink, TErrors} from '@/types';
 
 export default function Home() {
     const [inputValue, setInputValue] = useState('');
     const [createdLinks, setCreatedLinks] = useState<ILink[]>([]);
     const [errors, setErrors] = useState<TErrors[]>([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const storedLinks = localStorage.getItem('createdLinks');
@@ -30,6 +32,7 @@ export default function Home() {
         }
 
         // Validate URL with REGEX here client side
+        setLoading(true);
         const response = await fetch('/api/link/shorten', {
             method: 'POST',
             body: JSON.stringify({url: inputValue}),
@@ -42,11 +45,13 @@ export default function Home() {
 
         if (response.status !== 200) {
             setErrors([...errors, {message: data.message, key: Date.now()}]);
+            setLoading(false);
             return;
         }
         const newLinks = [data, ...createdLinks];
 
         // Show user new link and save to local storage
+        setLoading(false);
         setCreatedLinks(newLinks);
         localStorage.setItem('createdLinks', JSON.stringify(newLinks));
 
@@ -59,13 +64,13 @@ export default function Home() {
 
     return (
         <Layout>
-            <div className="flex flex-col items-center h-full w-full gap-20 bg-paleblue">
+            <div className="flex flex-col items-center h-full w-full gap-20">
                 <div className="w-full">
                     <div>
                         <div className="input-container">
                             <div className="flex items-center justify-end p-2 md:p-8 gap-2 flex-col">
                                 <div className="flex flex-col">
-                                    <label className="block font-bold">Kutt your link here</label>
+                                    <label className="p-2 font-bold">Kutt your link here</label>
                                     <input
                                         type={'text'}
                                         value={inputValue}
@@ -102,24 +107,9 @@ export default function Home() {
                                         );
                                     })}
                                 </div>
-                                <div className="flex flex-col justify-evenly">
-                                    {createdLinks.map((link, index) => {
-                                        return (
-                                            <div
-                                                key={index}
-                                                className="bg-grayblue p-4 ring-1 ring-black m-4 rounded-md"
-                                            >
-                                                <a
-                                                    href={link.shortUrl}
-                                                    className="text-standardblue"
-                                                >
-                                                    {link.shortUrl}
-                                                </a>
-                                                <p>URL: {link.originalUrl}</p>
-                                                <p>{new Date(link.createdAt).toLocaleString()}</p>
-                                            </div>
-                                        );
-                                    })}
+                                <div className="flex flex-col justify-evenly gap-2">
+                                    {loading && <div>Loading...</div>}
+                                    <CreatedLinks links={createdLinks} />
                                 </div>
                             </div>
                         </div>
