@@ -8,6 +8,19 @@ export default function Home() {
     const [createdLinks, setCreatedLinks] = useState<ILink[]>([]);
     const [errors, setErrors] = useState<TErrors[]>([]);
 
+    useEffect(() => {
+        const storedLinks = localStorage.getItem('createdLinks');
+        if (storedLinks) {
+            setCreatedLinks(JSON.parse(storedLinks));
+        }
+    }, []);
+
+    const clearLinks = () => {
+        // remove locally and from localstorage
+        setCreatedLinks([]);
+        localStorage.removeItem('createdLinks');
+    };
+
     const submitURL = async () => {
         if (!inputValue.length) {
             const key = Date.now();
@@ -25,11 +38,22 @@ export default function Home() {
             },
         });
 
+        if (response.status !== 200) {
+            setErrors([
+                ...errors,
+                {message: 'There was an error trying to shorten your link.', key: Date.now()},
+            ]);
+            return;
+        }
+
         const data = await response.json();
 
-        console.log({data});
-        setCreatedLinks([data, ...createdLinks]);
-        console.log(`Validating and sending value: ${inputValue}`);
+        const newLinks = [data, ...createdLinks];
+
+        // Show user new link and save to local storage
+        setCreatedLinks(newLinks);
+        localStorage.setItem('createdLinks', JSON.stringify(newLinks));
+
         setInputValue('');
     };
 
@@ -43,9 +67,9 @@ export default function Home() {
                 <div className="w-full">
                     <div>
                         <div className="input-container">
-                            <div className="flex items-center justify-center p-2 md:p-8 gap-2">
-                                <div>
-                                    <label className="block">Kutt your link here</label>
+                            <div className="flex items-center justify-end p-2 md:p-8 gap-2 flex-col">
+                                <div className="flex flex-col">
+                                    <label className="block font-bold">Kutt your link here</label>
                                     <input
                                         type={'text'}
                                         value={inputValue}
@@ -53,40 +77,55 @@ export default function Home() {
                                         placeholder="Enter URL"
                                         className="h-10 md:w-[40rem] lg:w-[60rem] ring-1 focus:outline focus:outline-2 focus:outline-darkblue rounded-lg p-4"
                                     ></input>
-                                    <div className="inline pl-4">
-                                        <button
-                                            onClick={submitURL}
-                                            className="bg-lightblue p-2 h-10 rounded-md ring-1 ring-black"
-                                        >
-                                            Shorten
-                                        </button>
+                                    <div className="flex justify-end self-end items-start m-2 gap-2">
+                                        <div>
+                                            <button
+                                                onClick={submitURL}
+                                                className="bg-lightblue p-2 h-10 rounded-md ring-1 ring-black font-bold"
+                                            >
+                                                Shorten
+                                            </button>
+                                        </div>
+                                        <div className="flex items-center flex-end">
+                                            <button
+                                                onClick={clearLinks}
+                                                className="bg-red-400 p-2 rounded-md font-bold ring-1 ring-black"
+                                            >
+                                                Clear Kutts
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div>
-                                        {createdLinks.map((link, index) => {
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className="bg-grayblue p-4 ring-1 ring-black m-4"
+                                    {errors.map(err => {
+                                        return (
+                                            <div
+                                                key={err.key}
+                                                className="text-red-500 flex items-center justify-end"
+                                            >
+                                                <p>{err.message}</p>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <div className="flex flex-col justify-evenly">
+                                    {createdLinks.map((link, index) => {
+                                        return (
+                                            <div
+                                                key={index}
+                                                className="bg-grayblue p-4 ring-1 ring-black m-4"
+                                            >
+                                                <a
+                                                    href={link.shortUrl}
+                                                    className="text-standardblue"
                                                 >
-                                                    <a
-                                                        href={link.shortUrl}
-                                                        className="text-standardblue"
-                                                    >
-                                                        {link.shortUrl}
-                                                    </a>
-                                                    <p>URL: {link.originalUrl}</p>
-                                                    <p>{link.createdAt.toLocaleDateString()}</p>
-                                                </div>
-                                            );
-                                        })}
-                                        {errors.map(err => {
-                                            return (
-                                                <div key={err.key} className="text-red-500">
-                                                    {err.message}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
+                                                    {link.shortUrl}
+                                                </a>
+                                                <p>URL: {link.originalUrl}</p>
+                                                <p>
+                                                    {new Date(link.createdAt).toLocaleTimeString()}
+                                                </p>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>
