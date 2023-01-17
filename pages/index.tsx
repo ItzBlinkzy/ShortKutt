@@ -24,10 +24,17 @@ export default function Home() {
         localStorage.removeItem('createdLinks');
     };
 
+    const handleSetErrors = (message: string) => {
+        const key = Date.now();
+        setErrors([...errors, {key, message}]);
+
+        setTimeout(() => {
+            setErrors(prevErrors => prevErrors.filter(err => err.key !== key));
+        }, 1500);
+    };
     const submitURL = async () => {
         if (!inputValue.length) {
-            const key = Date.now();
-            setErrors([...errors, {key, message: 'Must enter a URL'}]);
+            handleSetErrors('Must enter a URL');
             return;
         }
 
@@ -44,7 +51,7 @@ export default function Home() {
         const data = await response.json();
 
         if (response.status !== 200) {
-            setErrors([...errors, {message: data.message, key: Date.now()}]);
+            handleSetErrors(data.message);
             setLoading(false);
             return;
         }
