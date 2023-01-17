@@ -8,8 +8,8 @@ function CreatedLinks({links}: Props) {
     return (
         <>
             {links.map((link, index) => {
-                const slicedLink = link.originalUrl.slice(0, 100) + "..."
-                
+                const slicedLink = link.originalUrl.length > 100 ? link.originalUrl.slice(0, 100) + "..." : link.originalUrl
+
                 return (
                     <div
                         key={index}
