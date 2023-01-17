@@ -12,6 +12,10 @@ type TResponseData = {
     shortUrl?: string;
 };
 
+const MAX_URL_CHARS = 1000;
+const MAX_REQUESTS = 15;
+
+
 const limiter = rateLimit({
     interval: 60 * 1000, // 60 seconds
     uniqueTokenPerInterval: 500, // Max 500 users per second
@@ -21,7 +25,7 @@ const limiter = rateLimit({
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<TResponseData>) {
     try {
-        await limiter.check(res, 10, 'CACHE_TOKEN'); // 10 requests per minute
+        await limiter.check(res, MAX_REQUESTS, 'CACHE_TOKEN'); // 15 requests per minute
 
         if (req.method !== 'POST') {
             res.status(405).json({message: 'Only POST requests allowed'});
@@ -33,6 +37,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         if (!url) {
             res.status(400).json({message: 'Please provide a URL'});
+            return;
+        }
+
+        if (url.length > MAX_URL_CHARS) {
+            res.status(400).json({message: `Exceeding maxmimum URL chars - ${MAX_URL_CHARS}`});
             return;
         }
 
