@@ -8,6 +8,8 @@ function CreatedLinks({links}: Props) {
     return (
         <>
             {links.map((link, index) => {
+                const slicedLink = link.originalUrl.slice(0, 100) + "..."
+                
                 return (
                     <div
                         key={index}
@@ -16,7 +18,7 @@ function CreatedLinks({links}: Props) {
                         <a href={link.shortUrl} className="text-standardblue">
                             {link.shortUrl}
                         </a>
-                        <p>URL: {link.originalUrl}</p>
+                        <p>URL: {slicedLink}</p>
                         <p>{new Date(link.createdAt).toLocaleString()}</p>
                     </div>
                 );
