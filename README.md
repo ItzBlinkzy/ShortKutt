@@ -1,6 +1,8 @@
 # ShortKutt
 
-<img src="https://user-images.githubusercontent.com/68260779/212583025-0502fd5f-0cae-4044-a8a3-42ca2f761390.png"></img>
+<a href="https://shortkutt.me">
+  <img src="https://user-images.githubusercontent.com/68260779/212583025-0502fd5f-0cae-4044-a8a3-42ca2f761390.png"><img>
+</a>
 
 -   A simple URL Shortener.
 
