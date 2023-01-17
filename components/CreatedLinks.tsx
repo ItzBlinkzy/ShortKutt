@@ -11,7 +11,7 @@ function CreatedLinks({links}: Props) {
                 return (
                     <div
                         key={index}
-                        className="flex flex-col bg-grayblue p-4 ring-1 ring-black rounded-md min-w-0"
+                        className="flex flex-col bg-grayblue p-4 ring-1 ring-black rounded-md min-w-0 max-w-xs break-words"
                     >
                         <a href={link.shortUrl} className="text-standardblue">
                             {link.shortUrl}
