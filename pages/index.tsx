@@ -1,7 +1,5 @@
 import Layout from '@/components/Layout';
 import React, {useState, useEffect} from 'react';
-import Hero from '@/components/Hero';
-import Image from 'next/image';
 import CreatedLinks from '@/components/CreatedLinks';
 import {ILink, TErrors} from '@/types';
 
@@ -103,16 +101,18 @@ export default function Home() {
                                             </button>
                                         </div>
                                     </div>
-                                    {errors.map(err => {
-                                        return (
-                                            <div
-                                                key={err.key}
-                                                className="text-red-500 flex items-center justify-end"
-                                            >
-                                                <p>{err.message}</p>
-                                            </div>
-                                        );
-                                    })}
+                                    <div className="flex items-end flex-col gap-4">
+                                        {errors.map(err => {
+                                            return (
+                                                <div
+                                                    key={err.key}
+                                                    className={`error-message text-red-600 opacity-0 transition-opacity duration-500 error-${err.key}`}
+                                                >
+                                                    <p>{err.message}</p>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                                 <div className="flex flex-col justify-evenly gap-2">
                                     {loading && <div>Loading...</div>}
