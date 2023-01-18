@@ -3,6 +3,8 @@ import React, {useState, useEffect} from 'react';
 import Hero from '@/components/Hero';
 import Image from 'next/image';
 import CreatedLinks from '@/components/CreatedLinks';
+import isValidUrl from '@/lib/isValidUrl';
+
 import {ILink, TErrors} from '@/types';
 
 export default function Home() {
@@ -39,6 +41,11 @@ export default function Home() {
         }
 
         // Validate URL with REGEX here client side
+        if (!isValidUrl(inputValue)) {
+            handleSetErrors('Invalid URL');
+            return;
+        }
+
         setLoading(true);
         const response = await fetch('/api/link/shorten', {
             method: 'POST',

@@ -4,6 +4,7 @@ import generateId from '@/lib/generateId';
 import dbConnect from '@/lib/dbConnect';
 import Link from '@/models/Link';
 import rateLimit from '@/lib/rateLimit';
+import isValidUrl from '@/lib/isValidUrl';
 import type {ILink} from '@/types';
 
 type TResponseData = {
@@ -14,7 +15,6 @@ type TResponseData = {
 
 const MAX_URL_CHARS = 1000;
 const MAX_REQUESTS = 15;
-
 
 const limiter = rateLimit({
     interval: 60 * 1000, // 60 seconds
@@ -42,6 +42,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         if (url.length > MAX_URL_CHARS) {
             res.status(400).json({message: `Exceeding maxmimum URL chars - ${MAX_URL_CHARS}`});
+            return;
+        }
+
+        if (!isValidUrl(url)) {
+            res.status(400).json({message: 'Invalid URL'});
             return;
         }
 
