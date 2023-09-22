@@ -46,7 +46,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         res.status(308).redirect(`//${originalUrl}`);
         return;
-    } catch {
+    } catch (e) {
+        console.log(e);
         res.status(429).json({message: 'Rate limit exceeded'});
     }
 }

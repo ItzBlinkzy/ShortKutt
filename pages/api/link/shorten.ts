@@ -75,7 +75,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         } catch (e) {
             res.status(500).json({message: 'There was an error trying to shorten this link.'});
         }
-    } catch {
+    } catch (e) {
+        console.log(e);
         res.status(429).json({message: 'Rate limit exceeded'});
     }
 }
