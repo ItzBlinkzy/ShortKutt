@@ -96,7 +96,7 @@ export default function Home() {
                                         <div>
                                             <button
                                                 onClick={submitURL}
-                                                className="bg-lightblue p-2 h-10 rounded-md ring-1 ring-black font-bold"
+                                                className="bg-lightblue p-2 rounded-sm border border-slate-600 font-bold"
                                             >
                                                 Shorten
                                             </button>
@@ -104,7 +104,7 @@ export default function Home() {
                                         <div className="flex items-center flex-end">
                                             <button
                                                 onClick={clearLinks}
-                                                className="bg-red-400 p-2 rounded-md font-bold ring-1 ring-black"
+                                                className="bg-red-400 p-2 rounded-sm font-bold border border-slate-600"
                                             >
                                                 Clear Kutts
                                             </button>
@@ -114,7 +114,7 @@ export default function Home() {
                                         return (
                                             <div
                                                 key={err.key}
-                                                className="text-red-500 flex items-center justify-end"
+                                                className="text-red-500 flex items-center justify-end bg-red-300 p-4"
                                             >
                                                 <p>{err.message}</p>
                                             </div>
