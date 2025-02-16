@@ -121,7 +121,7 @@ export default function Home() {
                                         );
                                     })}
                                 </div>
-                                <div className="flex flex-col justify-evenly gap-2">
+                                <div className="flex flex-col justify-evenly gap-2 w-1/2">
                                     {loading && <div>Loading...</div>}
                                     <CreatedLinks links={createdLinks} />
                                 </div>
