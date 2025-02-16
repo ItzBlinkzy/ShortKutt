@@ -53,7 +53,7 @@ function CreatedLinks({links}: Props) {
                         <div className="bg-gray-50 px-4 py-3 border-t border-gray-100">
                             <h4 className="text-sm font-medium text-gray-500 mb-1">Original URL</h4>
                             <a
-                                href={link.originalUrl}
+                                href={"https://" + link.originalUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-600 hover:text-gray-800 transition-colors duration-200 text-sm flex items-center space-x-1"
